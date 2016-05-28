@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.geotools:gt-geojson:11.5.3-AURIN">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/geotools/gt-geojson/11.5.3-AURIN/gt-geojson-11.5.3-AURIN.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/geotools/gt-geojson/11.5.3-AURIN/gt-geojson-11.5.3-AURIN-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/geotools/gt-geojson/11.5.3-AURIN/gt-geojson-11.5.3-AURIN-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

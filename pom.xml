@@ -23,6 +23,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <geotools.version>11.5</geotools.version>
         <geotools.aurin.version>11.5.3-AURIN</geotools.aurin.version>
+
+        <!-- Spring version -->
+        <spring-framework.version>4.2.6.RELEASE</spring-framework.version>
+        <!-- ActiveMQ version -->
+        <activemq.version>5.13.3</activemq.version>
     </properties>
 
     <distributionManagement>
@@ -211,5 +216,39 @@
             <artifactId>commons-validator</artifactId>
             <version>1.4.0</version>
         </dependency>
-    </dependencies>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring-framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>${spring-framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring-framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring-framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring-framework.version}</version>
+        </dependency>
+
+        <!-- ActiveMQ Artifacts -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-spring</artifactId>
+            <version>${activemq.version}</version>
+        </dependency>
+
+</dependencies>
 </project>
