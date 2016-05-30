@@ -114,7 +114,7 @@ public class ConnectivityIndexOMSTest {
 
             // Stop the connection â€” good practice but redundant here
             connection.stop();
-            System.exit(0);
+            //System.exit(0);
         } catch (JMSException e) {
             e.printStackTrace();
         }
