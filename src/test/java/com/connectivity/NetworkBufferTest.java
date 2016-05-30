@@ -19,6 +19,7 @@ public class NetworkBufferTest {
 
     SrsHandlerService srsHandlerService = new SrsHandlerService();
 
+/*
     @Test
     public void testNetworkBufferOMS() throws Exception {
         final String networkFile = "src/test/testData/psma_cut_projected.geojson";
@@ -37,6 +38,7 @@ public class NetworkBufferTest {
         jp.readJSONFIle(testFile);
         GeotoolsAssert.assertFeatureSourceEquals(networkBufferOMS.getRegions(),jp.getSource());
     }
+*/
 
 
 /*    @Test

@@ -3,12 +3,17 @@ package com.connectivity;
 import com.data.component.JsonParser;
 import com.utilities.GeotoolsAssert;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.junit.Test;
 import org.junit.experimental.theories.suppliers.TestedOn;
 
 
 import javax.jms.*;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Created by xy on 11/05/16.
@@ -20,7 +25,7 @@ public class ConnectivityIndexOMSTest {
      *
      * @throws IOException
      */
-    @Test
+   /* @Test
     public void testConnectivityOMSWrapper() throws IOException {
         final String regionsFile = "src/test/testData/networkBufferOMS.geojson";
         final String networkFile = "src/test/testData/psma_cut_projected.geojson";
@@ -35,7 +40,8 @@ public class ConnectivityIndexOMSTest {
         jp.readJSONFIle(testFile);
         connectivityOMS.run();
         GeotoolsAssert.assertFeatureSourceEquals(connectivityOMS.getResults(), jp.getSource());
-    }
+    }*/
+/*
 
     @Test
     public void testAll() throws IOException {
@@ -68,21 +74,19 @@ public class ConnectivityIndexOMSTest {
         System.out.print(System.currentTimeMillis() - startTime);
         //GeotoolsAssert.assertFeatureSourceEquals(connectivityOMS.getResults(), jp.getSource());
     }
+*/
 
     @Test
-    public void testPro() throws IOException{
+    public void testSener() throws IOException{
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory
                 ("tcp://localhost:61616");
 
-        // Note that a new thread is created by createConnection, and it
-        //  does not stop even if connection.stop() is called. We must
-        //  shut down the JVM using System.exit() to end the program
+        long startTime = System.currentTimeMillis();
+
         Connection connection = null;
         try {
             connection = factory.createConnection();
-            // Start the connection
             connection.start();
-            // Create a non-transactional session with automatic acknowledgement
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             // Create a reference to the queue test_queue in this session. Note
@@ -96,8 +100,25 @@ public class ConnectivityIndexOMSTest {
             TextMessage sendMessage;
 
             // Create a simple text message and send it
+
+            JSONParser parser = new JSONParser();
+
+            Object obj = parser.parse(new FileReader("src/test/testData/Rndm5ptsProjected.json"));
+
+            JSONObject jsonObject = (JSONObject) obj;
+
+            JSONArray pointsList = (JSONArray) jsonObject.get("features");
+
             for(int i = 0; i < 5; i++){
-                sendMessage = session.createTextMessage ("Hello, world! Number " + i);
+                JSONObject newObj = new JSONObject();
+                JSONArray newArray = new JSONArray();
+                newArray.add(pointsList.get(i));
+
+                newObj.put("features", newArray.toString());
+
+                newObj.put("type", "FeatureCollection");
+
+                sendMessage = session.createTextMessage (newObj.toJSONString().replaceAll("\\\\","").replaceAll("\"\\[","[").replaceAll("\\]\"","\\]"));
                 producer.send(sendMessage);
             }
             String mes;
@@ -106,19 +127,82 @@ public class ConnectivityIndexOMSTest {
                 i++;
                 mes = ((TextMessage)consumer.receive()).getText();
                 System.out.println(mes);
-                //System.out.println(oriQueueSize.intValue() + "  " +newQueueSize.intValue());
-                // oriQueueSize = (Long) conn.getAttribute(producerActiveMQ, "QueueSize");
-                // newQueueSize = (Long) conn.getAttribute(consumeActiveMQ, "QueueSize");
-            }
-            // while(oriQueueSize.intValue() != 0 || newQueueSize.intValue() != 0);
 
-            // Stop the connection â€” good practice but redundant here
+            }
+            System.out.print(System.currentTimeMillis() - startTime);
+
             connection.stop();
             //System.exit(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void testReceiver() throws IOException{
+        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory
+                ("tcp://115.146.93.32:61616");
+
+        Connection connection = null;
+        try {
+            connection = factory.createConnection();
+            connection.start();
+
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+            Queue original_queue = session.createQueue("original_queue?consumer.prefetchSize=1");
+            MessageConsumer consumer = session.createConsumer(original_queue);
+
+            Queue new_queue = session.createQueue("new_queue");
+            MessageProducer producer = session.createProducer(new_queue);
+
+            TextMessage consumeMessage;
+            TextMessage sendMessage;
+            int messages = 0;
+            String mes;
+            do
+            {
+                consumeMessage = (TextMessage)consumer.receive();
+                messages++;
+                PrintWriter writer = new PrintWriter(messages + ".txt", "UTF-8");
+                writer.println(consumeMessage.getText());
+                writer.close();
+
+                final String pointsFile = messages + ".txt";
+                final String networkFile = "src/test/testData/psma_cut_projected.geojson";
+
+                //initial file parser
+                JsonParser jp = new JsonParser();
+
+                NetworkBufferOMS networkBufferOMS = new NetworkBufferOMS();
+                jp.readJSONFIle(networkFile);
+                networkBufferOMS.setNetwork(jp.getSource());
+                jp.readJSONFIle(pointsFile);
+                networkBufferOMS.setPoints(jp.getSource());
+                networkBufferOMS.setBufferSize(100.0);
+                networkBufferOMS.setDistance(1600.0);
+                networkBufferOMS.run();
+
+                //initial connectivity calculator
+                ConnectivityIndexOMS connectivityOMS = new ConnectivityIndexOMS();
+
+                jp.readJSONFIle(networkFile);
+                connectivityOMS.setNetwork(jp.getSource());
+                connectivityOMS.setRegions(networkBufferOMS.getRegions());
+                connectivityOMS.run();
+
+                mes = connectivityOMS.getResults().toString();
+                sendMessage = session.createTextMessage (mes);
+                producer.send(sendMessage);
+            } while (true);
+
         } catch (JMSException e) {
             e.printStackTrace();
         }
 
+
+        //System.exit(0);
     }
 }
 
