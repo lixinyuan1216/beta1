@@ -39,7 +39,7 @@ public class NetworkBufferTest {
     }
 
 
-    @Test
+/*    @Test
     public void test() throws Exception {
         final String networkFile = "src/test/testData/network.json";
         final String pointsFile = "src/test/testData/points.json";
@@ -56,7 +56,7 @@ public class NetworkBufferTest {
         networkBufferOMS.run();
         jp.readJSONFIle(testFile);
         GeotoolsAssert.assertFeatureSourceEquals(networkBufferOMS.getRegions(),jp.getSource());
-    }
+    }*/
 }
 
 

@@ -1,8 +1,14 @@
 package com.data.component;
 
-import com.data.component.JsonParser;
 import org.junit.Test;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+import javax.jms.*;
+
+import org.apache.activemq.ActiveMQConnectionFactory;
+import javax.management.MBeanServerConnection;
+import javax.management.remote.JMXConnector;
+import javax.management.remote.JMXConnectorFactory;
+import javax.management.remote.JMXServiceURL;
+import javax.management.ObjectName;
 
 import static org.junit.Assert.assertEquals;
 /**
@@ -11,9 +17,9 @@ import static org.junit.Assert.assertEquals;
 public class JsonParserTest {
     JsonParser jp;
 
-    @Test
+/*    @Test
     public void testReader() throws Exception {
-        final String path = "src/test/testData/points.json";
+        final String path = "src/test/testData/Rndm5ptsProjected.json";
 
         jp = new JsonParser();
         jp.readJSONFIle(path);
@@ -21,6 +27,8 @@ public class JsonParserTest {
         //writer.features = jp.getSource();
         //System.out.println(writer.writeFeaturesToTempFile().toString());
         int size = jp.getSource().getFeatures().size();
-        assertEquals(10, size);
+        assertEquals(5, size);
+
+    }*/
     }
-}
+

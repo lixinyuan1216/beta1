@@ -15,8 +15,7 @@ public class Producer {
 
     public static void main (String[] args)
             throws Exception {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("producer.xml");
-        JmsMessageSender jmsMessageSender = (JmsMessageSender)ctx.getBean("jmsMessageSender");
+
 
         // Create a connection factory referring to the broker host and port
 

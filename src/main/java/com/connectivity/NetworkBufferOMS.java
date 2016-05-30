@@ -168,8 +168,6 @@ public class NetworkBufferOMS {
     }
 
     private void validateInputs() {
-        System.out.println(network.getSchema().getCoordinateReferenceSystem().getCoordinateSystem().getAxis(0).getUnit().toString());
-
         if (network == null) {
             throw new IllegalArgumentException("Network buffer error: A road network was not provided");
         }

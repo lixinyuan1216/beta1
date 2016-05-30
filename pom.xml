@@ -23,11 +23,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <geotools.version>11.5</geotools.version>
         <geotools.aurin.version>11.5.3-AURIN</geotools.aurin.version>
-
         <!-- Spring version -->
         <spring-framework.version>4.2.6.RELEASE</spring-framework.version>
         <!-- ActiveMQ version -->
-        <activemq.version>5.13.3</activemq.version>
+        <activemq.version>5.13.2</activemq.version>
     </properties>
 
     <distributionManagement>
@@ -217,6 +216,7 @@
             <version>1.4.0</version>
         </dependency>
 
+        <!-- Spring aritifacts -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -227,21 +227,6 @@
             <artifactId>spring-jms</artifactId>
             <version>${spring-framework.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring-framework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <version>${spring-framework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-            <version>${spring-framework.version}</version>
-        </dependency>
 
         <!-- ActiveMQ Artifacts -->
         <dependency>
@@ -250,5 +235,16 @@
             <version>${activemq.version}</version>
         </dependency>
 
-</dependencies>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>jms</artifactId>
+            <version>1.1</version>
+        </dependency>
+    </dependencies>
 </project>
