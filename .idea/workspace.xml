@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="907137bb-275b-4099-ad38-3fc95a912684" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/connectivity/ConnectivityIndexOMSTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/connectivity/ConnectivityIndexOMSTest.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/connectivity/NetworkBufferTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/connectivity/NetworkBufferTest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__aopalliance_aopalliance_1_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__aopalliance_aopalliance_1_0.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__au_edu_qcif_geograph_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__au_edu_qcif_geograph_2_0.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__au_edu_uq_aurin_analytics_commons_0_6.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__au_edu_uq_aurin_analytics_commons_0_6.xml" />
@@ -72,8 +74,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/message/Producer.java" afterPath="$PROJECT_DIR$/src/main/java/com/message/Producer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/producer.xml" afterPath="$PROJECT_DIR$/src/main/resources/producer.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/connectivity/ConnectivityIndexOMSTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/connectivity/ConnectivityIndexOMSTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/connectivity/NetworkBufferTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/connectivity/NetworkBufferTest.java" />
     </list>
     <ignored path="beta1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -134,12 +134,10 @@
       <file leaf-file-name="ConnectivityIndexOMSTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/connectivity/ConnectivityIndexOMSTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-134">
-              <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+            <state relative-caret-position="437">
+              <caret line="35" column="37" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="docComment;method#testSener#0;class#ConnectivityIndexOMSTest#0" expanded="false" />
-                <element signature="method#testSener#0;class#ConnectivityIndexOMSTest#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -285,7 +283,7 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1912" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
@@ -351,6 +349,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="testData" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1134,7 +1136,7 @@
       <workItem from="1464352463710" duration="3354000" />
       <workItem from="1464391965488" duration="24473000" />
       <workItem from="1464483711455" duration="7334000" />
-      <workItem from="1464523416967" duration="16885000" />
+      <workItem from="1464523416967" duration="19026000" />
     </task>
     <task id="LOCAL-00001" summary="beta2">
       <created>1464395809307</created>
@@ -1157,7 +1159,14 @@
       <option name="project" value="LOCAL" />
       <updated>1464569038595</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add message passing function">
+      <created>1464571331513</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1464571331513</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1173,8 +1182,8 @@
     <history-entry file="ConnectivityIndexOMSTest_testAll - 2016.05.30 at 10h 19m 46s.xml">
       <configuration name="ConnectivityIndexOMSTest.testAll" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ConnectivityIndexOMSTest_testConnectivityOMSWrapper - 2016.05.30 at 09h 31m 59s.xml">
-      <configuration name="ConnectivityIndexOMSTest.testConnectivityOMSWrapper" configurationId="JUnit" />
+    <history-entry file="ConnectivityIndexOMSTest_testAll - 2016.05.30 at 11h 35m 30s.xml">
+      <configuration name="ConnectivityIndexOMSTest.testAll" configurationId="JUnit" />
     </history-entry>
     <history-entry file="ConnectivityIndexOMSTest_testConnectivityOMSWrapper - 2016.05.30 at 09h 40m 30s.xml">
       <configuration name="ConnectivityIndexOMSTest.testConnectivityOMSWrapper" configurationId="JUnit" />
@@ -1193,7 +1202,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="140466000" />
+    <option name="totallyTimeSpent" value="142607000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1205,7 +1214,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1222,7 +1231,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1977612" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1977612" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1570,12 +1579,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/connectivity/ConnectivityIndexOMSTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-134">
-          <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+        <state relative-caret-position="437">
+          <caret line="35" column="37" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="docComment;method#testSener#0;class#ConnectivityIndexOMSTest#0" expanded="false" />
-            <element signature="method#testSener#0;class#ConnectivityIndexOMSTest#0" expanded="false" />
           </folding>
         </state>
       </provider>
