@@ -14,6 +14,7 @@ import javax.jms.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.UUID;
 
 /**
  * Created by xy on 11/05/16.
@@ -41,15 +42,15 @@ public class ConnectivityIndexOMSTest {
         connectivityOMS.run();
         GeotoolsAssert.assertFeatureSourceEquals(connectivityOMS.getResults(), jp.getSource());
     }*/
-/*
 
-    @Test
+
+    /*@Test
     public void testAll() throws IOException {
 
         long startTime = System.currentTimeMillis();
         final String pointsFile = "src/test/testData/Rndm5ptsProjected.json";
         final String networkFile = "src/test/testData/psma_cut_projected.geojson";
-        final String testFile = "src/test/testData/connectivityOMSTest.geojson";
+        //final String testFile = "src/test/testData/connectivityOMSTest.geojson";
 
         //initial file parser
         JsonParser jp = new JsonParser();
@@ -69,14 +70,69 @@ public class ConnectivityIndexOMSTest {
         jp.readJSONFIle(networkFile);
         connectivityOMS.setNetwork(jp.getSource());
         connectivityOMS.setRegions(networkBufferOMS.getRegions());
-        jp.readJSONFIle(testFile);
+        //jp.readJSONFIle(testFile);
         connectivityOMS.run();
-        System.out.print(System.currentTimeMillis() - startTime);
-        //GeotoolsAssert.assertFeatureSourceEquals(connectivityOMS.getResults(), jp.getSource());
-    }
-*/
 
+        //System.out.print(System.currentTimeMillis() - startTime);
+        //GeotoolsAssert.assertFeatureSourceEquals(connectivityOMS.getResults(), jp.getSource());
+    }*/
     @Test
+    public void testSener() throws IOException {
+        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory
+                ("tcp://localhost:61616");
+
+        Connection connection = null;
+        try {
+            connection = factory.createConnection();
+            connection.start();
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+            // Create a reference to the queue test_queue in this session. Note
+            //  that ActiveMQ has auto-creation enabled by default, so this JMS
+            //  destination will be created on the broker automatically
+            Queue new_queue = session.createQueue("new_queue");
+            MessageConsumer consumer = session.createConsumer(new_queue);
+
+            Queue original_queue = session.createQueue("original_queue");
+            MessageProducer producer = session.createProducer(original_queue);
+            TextMessage sendMessage;
+
+            // Create a simple text message and send it
+
+            JSONParser parser = new JSONParser();
+
+            Object obj = parser.parse(new FileReader("src/test/testData/Rndm5ptsProjected.json"));
+
+            JSONObject jsonObject = (JSONObject) obj;
+
+            JSONArray pointsList = (JSONArray) jsonObject.get("features");
+
+            for (int i = 0; i < 10; i++) {
+                JSONObject newObj = new JSONObject();
+                JSONArray newArray = new JSONArray();
+                newArray.add(pointsList.get(i));
+
+                newObj.put("features", newArray.toString());
+
+                newObj.put("type", "FeatureCollection");
+
+                sendMessage = session.createTextMessage(newObj.toJSONString().replaceAll("\\\\", "").replaceAll("\"\\[", "[").replaceAll("\\]\"", "\\]"));
+                producer.send(sendMessage);
+            }
+            String mes;
+            int i = 0;
+            while (i < 10) {
+                i++;
+                consumer.receive();
+            }
+            connection.stop();
+            //System.exit(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+  /*  @Test
     public void testReceiver() throws IOException{
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory
                 ("tcp://115.146.93.32:61616");
@@ -100,23 +156,23 @@ public class ConnectivityIndexOMSTest {
             String mes;
             JsonParser jp = new JsonParser();
             NetworkBufferOMS networkBufferOMS = new NetworkBufferOMS();
-            ConnectivityIndexOMS connectivityOMS = new ConnectivityIndexOMS();
-            final String networkFile = "src/test/testData/psma_cut_projected.geojson";
-            jp.readJSONFIle(networkFile);
-            networkBufferOMS.setNetwork(jp.getSource());
-            networkBufferOMS.setBufferSize(100.0);
-            networkBufferOMS.setDistance(1600.0);
-            connectivityOMS.setNetwork(jp.getSource());
+               ConnectivityIndexOMS connectivityOMS = new ConnectivityIndexOMS();
+               final String networkFile = "src/test/testData/psma_cut_projected.geojson";
+               jp.readJSONFIle(networkFile);
+               networkBufferOMS.setNetwork(jp.getSource());
+               networkBufferOMS.setBufferSize(200.0);
+               networkBufferOMS.setDistance(3200.0);
+               connectivityOMS.setNetwork(jp.getSource());
             do
             {
                 long startTime = System.currentTimeMillis();
                 consumeMessage = (TextMessage)consumer.receive();
-                messages++;
-                PrintWriter writer = new PrintWriter(messages + ".txt", "UTF-8");
+                UUID uuid = UUID.randomUUID();
+                final String pointsFile = uuid.toString() + ".txt";
+                PrintWriter writer = new PrintWriter(pointsFile, "UTF-8");
                 writer.println(consumeMessage.getText());
                 writer.close();
 
-                final String pointsFile = messages + ".txt";
 
                 //initial file parser
                 //JsonParser jp = new JsonParser();
@@ -129,7 +185,7 @@ public class ConnectivityIndexOMSTest {
                 networkBufferOMS.run();
 
                 //initial connectivity calculator
-                // ConnectivityIndexOMS connectivityOMS = new ConnectivityIndexOMS();
+               // ConnectivityIndexOMS connectivityOMS = new ConnectivityIndexOMS();
 
                 connectivityOMS.setRegions(networkBufferOMS.getRegions());
                 connectivityOMS.run();
@@ -137,6 +193,8 @@ public class ConnectivityIndexOMSTest {
                 mes = connectivityOMS.getResults().toString();
                 sendMessage = session.createTextMessage (mes);
                 producer.send(sendMessage);
+                System.out.println(System.currentTimeMillis() - startTime + "final time");
+                System.out.println("the " + messages + " come out");
 
             } while (true);
 
@@ -146,6 +204,6 @@ public class ConnectivityIndexOMSTest {
 
 
         //System.exit(0);
-    }
+    }*/
 }
 

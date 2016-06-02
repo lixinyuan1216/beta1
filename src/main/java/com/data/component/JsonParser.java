@@ -19,7 +19,6 @@ import oms3.annotations.Out;
 
 import org.geotools.data.DataUtilities;
 import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.geojson.feature.FeatureJSON;
 import org.geotools.geojson.geom.GeometryJSON;
@@ -66,7 +65,7 @@ public class JsonParser{
             source = DataUtilities.source(featureCollection);
         }
         catch(Exception e){
-            System.out.print("error");
+            e.printStackTrace();
         }
         finally{
             is.close();
