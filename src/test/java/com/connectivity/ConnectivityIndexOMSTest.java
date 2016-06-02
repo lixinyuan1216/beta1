@@ -132,7 +132,7 @@ public class ConnectivityIndexOMSTest {
         }
     }
 
-  /*  @Test
+  /*     @Test
     public void testReceiver() throws IOException{
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory
                 ("tcp://115.146.93.32:61616");
@@ -160,8 +160,8 @@ public class ConnectivityIndexOMSTest {
                final String networkFile = "src/test/testData/psma_cut_projected.geojson";
                jp.readJSONFIle(networkFile);
                networkBufferOMS.setNetwork(jp.getSource());
-               networkBufferOMS.setBufferSize(200.0);
-               networkBufferOMS.setDistance(3200.0);
+               networkBufferOMS.setBufferSize(100.0);
+               networkBufferOMS.setDistance(1600.0);
                connectivityOMS.setNetwork(jp.getSource());
             do
             {
@@ -201,7 +201,6 @@ public class ConnectivityIndexOMSTest {
         } catch (JMSException e) {
             e.printStackTrace();
         }
-
 
         //System.exit(0);
     }*/
