@@ -5,12 +5,16 @@ The system is deployed in Ubuntu 14.04.
 1. download dependencies
 
 sudo apt-get update
+
 sudo apt-get install default-jdk
-# sudo apt-get install maven
-# sudo apt-get install git-core
+
+sudo apt-get install maven
+
+sudo apt-get install git-core
 
 2. copy code from github
-# git clone https://github.com/lixinyuan1216/beta1
+
+git clone https://github.com/lixinyuan1216/beta1
 
 3. add mirror to maven XML config file in the project
 ```xml
@@ -23,4 +27,5 @@ sudo apt-get install default-jdk
 </mirrors>
 ```
 4. build the system
-# mvn clean install
+
+mvn clean install
