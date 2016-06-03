@@ -8,8 +8,11 @@ import static org.junit.Assert.assertEquals;
      * Created by xy on 10/05/16.
      */
     public class JsonParserTest {
-        JsonParser jp;
+/*        JsonParser jp;
 
+    *//*
+        Test json reader
+     *//*
         @Test
         public void testReader() throws Exception {
             final String path = "src/test/testData/Rndm5ptsProjected.json";
@@ -22,15 +25,18 @@ import static org.junit.Assert.assertEquals;
 
         }
 
-    /*@Test
+    *//*
+    Test json Writer
+    *//*
+    @Test
     public void testWriter() throws Exception {
         final String path = "src/test/testData/Rndm5ptsProjected.json";
 
         jp = new JsonParser();
         jp.readJSONFIle(path);
-        *//*JsonWriter writer = new JsonWriter();
+        JsonWriter writer = new JsonWriter();
         writer.features = jp.getSource();
-        System.out.println(writer.writeFeaturesToTempFile().toString());*//*
+        System.out.println(writer.writeFeaturesToTempFile().toString());
         int size = jp.getSource().getFeatures().size();
         assertEquals(10, size);
     }*/

@@ -2,12 +2,16 @@ package com.connectivity;
 
 import com.data.component.JsonParser;
 import com.utilities.GeotoolsAssert;
+import com.vividsolutions.jts.geom.Geometry;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.junit.Test;
-import org.junit.experimental.theories.suppliers.TestedOn;
+import org.opengis.feature.Property;
+import org.opengis.feature.simple.SimpleFeature;
 
 
 import javax.jms.*;
@@ -26,7 +30,7 @@ public class ConnectivityIndexOMSTest {
      *
      * @throws IOException
      */
-   /* @Test
+/*    @Test
     public void testConnectivityOMSWrapper() throws IOException {
         final String regionsFile = "src/test/testData/networkBufferOMS.geojson";
         final String networkFile = "src/test/testData/psma_cut_projected.geojson";
@@ -44,12 +48,13 @@ public class ConnectivityIndexOMSTest {
     }*/
 
 
-    /*@Test
+    //Run walkability computation in single VM
+    @Test
     public void testAll() throws IOException {
 
-        long startTime = System.currentTimeMillis();
         final String pointsFile = "src/test/testData/Rndm5ptsProjected.json";
         final String networkFile = "src/test/testData/psma_cut_projected.geojson";
+        //expected results
         //final String testFile = "src/test/testData/connectivityOMSTest.geojson";
 
         //initial file parser
@@ -73,11 +78,22 @@ public class ConnectivityIndexOMSTest {
         //jp.readJSONFIle(testFile);
         connectivityOMS.run();
 
+
+        SimpleFeatureIterator iterator = connectivityOMS.getResults().getFeatures().features();
+        while(iterator.hasNext()){
+            SimpleFeature feature = iterator.next();
+            for (Property p : feature.getProperties()) {
+                System.out.print(p.getName() + " : " + p.getValue().toString() + " | ");
+            }
+            System.out.println();
+        }
         //System.out.print(System.currentTimeMillis() - startTime);
         //GeotoolsAssert.assertFeatureSourceEquals(connectivityOMS.getResults(), jp.getSource());
-    }*/
-    @Test
-    public void testSener() throws IOException {
+    }
+
+    //Master program block
+    /*@Test
+    public void testSender() throws IOException{
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory
                 ("tcp://localhost:61616");
 
@@ -107,7 +123,7 @@ public class ConnectivityIndexOMSTest {
 
             JSONArray pointsList = (JSONArray) jsonObject.get("features");
 
-            for (int i = 0; i < 10; i++) {
+            for(int i = 0; i < 30; i++){
                 JSONObject newObj = new JSONObject();
                 JSONArray newArray = new JSONArray();
                 newArray.add(pointsList.get(i));
@@ -116,23 +132,23 @@ public class ConnectivityIndexOMSTest {
 
                 newObj.put("type", "FeatureCollection");
 
-                sendMessage = session.createTextMessage(newObj.toJSONString().replaceAll("\\\\", "").replaceAll("\"\\[", "[").replaceAll("\\]\"", "\\]"));
+                sendMessage = session.createTextMessage (newObj.toJSONString().replaceAll("\\\\","").replaceAll("\"\\[","[").replaceAll("\\]\"","\\]"));
                 producer.send(sendMessage);
             }
-            String mes;
             int i = 0;
-            while (i < 10) {
+            while(i < 30){
                 i++;
                 consumer.receive();
             }
             connection.stop();
-            //System.exit(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
-  /*     @Test
+    //slave program block
+    @Test
     public void testReceiver() throws IOException{
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory
                 ("tcp://115.146.93.32:61616");
@@ -144,9 +160,12 @@ public class ConnectivityIndexOMSTest {
 
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
+            //the point queue, prefetch is 1
+            //take one point from the queue at each time
             Queue original_queue = session.createQueue("original_queue?consumer.prefetchSize=1");
             MessageConsumer consumer = session.createConsumer(original_queue);
 
+            //the result queue
             Queue new_queue = session.createQueue("new_queue");
             MessageProducer producer = session.createProducer(new_queue);
 
@@ -156,13 +175,13 @@ public class ConnectivityIndexOMSTest {
             String mes;
             JsonParser jp = new JsonParser();
             NetworkBufferOMS networkBufferOMS = new NetworkBufferOMS();
-               ConnectivityIndexOMS connectivityOMS = new ConnectivityIndexOMS();
-               final String networkFile = "src/test/testData/psma_cut_projected.geojson";
-               jp.readJSONFIle(networkFile);
-               networkBufferOMS.setNetwork(jp.getSource());
-               networkBufferOMS.setBufferSize(100.0);
-               networkBufferOMS.setDistance(1600.0);
-               connectivityOMS.setNetwork(jp.getSource());
+            ConnectivityIndexOMS connectivityOMS = new ConnectivityIndexOMS();
+            final String networkFile = "src/test/testData/psma_cut_projected.geojson";
+            jp.readJSONFIle(networkFile);
+            networkBufferOMS.setNetwork(jp.getSource());
+            networkBufferOMS.setBufferSize(100.0);
+            networkBufferOMS.setDistance(1600.0);
+            connectivityOMS.setNetwork(jp.getSource());
             do
             {
                 long startTime = System.currentTimeMillis();
@@ -173,19 +192,16 @@ public class ConnectivityIndexOMSTest {
                 writer.println(consumeMessage.getText());
                 writer.close();
 
-
                 //initial file parser
                 //JsonParser jp = new JsonParser();
-
                 //NetworkBufferOMS networkBufferOMS = new NetworkBufferOMS();
 
                 jp.readJSONFIle(pointsFile);
                 networkBufferOMS.setPoints(jp.getSource());
-
                 networkBufferOMS.run();
 
                 //initial connectivity calculator
-               // ConnectivityIndexOMS connectivityOMS = new ConnectivityIndexOMS();
+                // ConnectivityIndexOMS connectivityOMS = new ConnectivityIndexOMS();
 
                 connectivityOMS.setRegions(networkBufferOMS.getRegions());
                 connectivityOMS.run();
@@ -193,16 +209,14 @@ public class ConnectivityIndexOMSTest {
                 mes = connectivityOMS.getResults().toString();
                 sendMessage = session.createTextMessage (mes);
                 producer.send(sendMessage);
-                System.out.println(System.currentTimeMillis() - startTime + "final time");
-                System.out.println("the " + messages + " come out");
+                System.out.println((System.currentTimeMillis() - startTime) + " is the elapsed time for message " + messages);
+                messages++;
 
             } while (true);
 
         } catch (JMSException e) {
             e.printStackTrace();
         }
-
-        //System.exit(0);
     }*/
 }
 
