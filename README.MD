@@ -20,5 +20,5 @@ git clone https://github.com/lixinyuan1216/beta1
     </mirror>
   </mirrors>
   
- 4. build the system
- mvn clean install
+4. build the system
+mvn clean install
