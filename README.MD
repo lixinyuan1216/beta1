@@ -4,8 +4,8 @@ The system is deployed in Ubuntu 14.04.
 
 1. download dependencies
 
-# sudo apt-get update
-# sudo apt-get install default-jdk
+sudo apt-get update
+sudo apt-get install default-jdk
 # sudo apt-get install maven
 # sudo apt-get install git-core
 
